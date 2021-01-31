@@ -4,7 +4,6 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'locator.config.dart';
-import 'package:get/get.dart'; // for snackbardissmissible direction
 
 enum SnackbarType { greenAndRed, redAndWhite }
 final locator = GetIt.instance;
@@ -56,7 +55,6 @@ void setupSnackbarUi() {
       backgroundColor: Colors.redAccent,
       textColor: Colors.white,
       borderRadius: 1,
-      dismissDirection: SnackDismissDirection.HORIZONTAL,
     ),
   );
   service.registerCustomSnackbarConfig(

@@ -18,9 +18,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorKey: StackedService.navigatorKey,
-      title: 'Template App',
+      title: 'Messenger',
       onGenerateRoute: Router(),
       theme: ThemeData(
+        fontFamily: 'Muli',
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),

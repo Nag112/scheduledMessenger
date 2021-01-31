@@ -20,6 +20,7 @@ class RoundedButton extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
+      padding: EdgeInsets.all(10),
       width: size.width * width,
       child: FlatButton(
         child: Text(
@@ -28,10 +29,10 @@ class RoundedButton extends StatelessWidget {
               color: textColor, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         color: color,
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         splashColor: Colors.blueAccent,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(29),
+          borderRadius: BorderRadius.circular(50),
         ),
         textColor: textColor,
         onPressed: onPress,

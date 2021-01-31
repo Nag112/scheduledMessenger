@@ -1,3 +1,5 @@
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:messenger/constants.dart';
 import 'package:messenger/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -25,9 +27,9 @@ class UtilsService {
       onMainButtonTapped: () => {},
     );
   }
-  showSnackBar({title, msg})
-  {
- _snackBar.showSnackbar(
+
+  showSnackBar({title, msg}) {
+    _snackBar.showSnackbar(
       message: msg,
       title: title,
       duration: Duration(seconds: 5),
@@ -37,6 +39,17 @@ class UtilsService {
       mainButtonTitle: '',
       onMainButtonTapped: () => {},
     );
+  }
+
+  showToast({background = kErrorPrimaryColor, textColor = Colors.white, msg}) {
+    return Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: background,
+        textColor: textColor,
+        fontSize: 16.0);
   }
 
   void setupSnackbarUi() {

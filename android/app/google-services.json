@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1010128492843",
+    "project_id": "scheduledmessenger-db10f",
+    "storage_bucket": "scheduledmessenger-db10f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1010128492843:android:de36afa2069c1398758d6e",
+        "android_client_info": {
+          "package_name": "com.example.messenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1010128492843-sek938218bf40v8vm2105fs1s3qcap28.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.messenger",
+            "certificate_hash": "d0102b85fe7f80fb9328f97c937c30c9e1488128"
+          }
+        },
+        {
+          "client_id": "1010128492843-fk4e2o6p3ds96c7pm2k1qn7a5ie76jm5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaz2EIefVvuCfKZ3TLUraX5PMbZD2tuqY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1010128492843-fk4e2o6p3ds96c7pm2k1qn7a5ie76jm5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -2,70 +2,130 @@ import 'package:messenger/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CustomTextField extends StatelessWidget {
-  final String hint;
-  final Function onChange;
+class RoundedInputField extends StatelessWidget {
+  final String labelText;
+  final IconData icon;
   final Function validator;
   final TextInputType keyboardType;
-  CustomTextField({this.hint, this.onChange, this.validator,this.keyboardType});
+  final ValueChanged<String> onChanged;
+  const RoundedInputField({
+    Key key,
+    this.validator,
+    this.labelText,
+    this.keyboardType = TextInputType.text,
+    this.icon,
+    this.onChanged,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(10)),
+      padding: EdgeInsets.all(10),
       child: TextFormField(
-        onChanged: onChange,
-        onEditingComplete:()=> FocusScope.of(context).nextFocus(),
-        validator: validator ?? (val) => null,
-        keyboardType: keyboardType??TextInputType.text,
+        onChanged: onChanged,
+        validator: validator,
+        keyboardType: keyboardType,
+        cursorColor: kPrimaryColor,
+        onEditingComplete: () => FocusScope.of(context).nextFocus(),
         decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: TextStyle(
-              color: kPrimaryColor,
-            ),
-            border: InputBorder.none),
+          contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+          labelText: labelText,
+          hintText: "Enter your ${labelText.toLowerCase()}",
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: kPrimaryLightColor),
+              borderRadius: BorderRadius.circular(40)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: kPrimaryColor),
+              borderRadius: BorderRadius.circular(40)),
+          suffixIcon: Icon(
+            icon,
+            color: kPrimaryLightColor,
+          ),
+          border: InputBorder.none,
+        ),
       ),
     );
   }
 }
 
-class CustomPasswordField extends StatefulWidget {
-  final Function onChange;
-  final String hint;
-  CustomPasswordField({this.onChange,this.hint});
+class RoundedPasswordField extends StatefulWidget {
+  final ValueChanged<String> onChanged;
+  final String labelText;
+  final String hintText;
+  const RoundedPasswordField({
+    Key key,
+    this.hintText,
+    this.labelText = "Password",
+    this.onChanged,
+  }) : super(key: key);
+
   @override
-  _CustomPasswordFieldState createState() => _CustomPasswordFieldState();
+  _RoundedPasswordFieldState createState() => _RoundedPasswordFieldState();
 }
 
-class _CustomPasswordFieldState extends State<CustomPasswordField> {
+class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
   bool visible = false;
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-      ),
+      padding: EdgeInsets.all(10),
       child: TextFormField(
-        onChanged: widget.onChange,
         obscureText: !visible,
+        onChanged: widget.onChanged,
+        cursorColor: kPrimaryColor,
+        onEditingComplete: () => FocusScope.of(context).nextFocus(),
         decoration: InputDecoration(
-            hintText: widget.hint??"Password",
-            hintStyle: TextStyle(
-              color: kPrimaryColor,
-            ),
-            border: InputBorder.none,
-            suffixIcon: IconButton(
-              icon: Icon(visible ? Icons.visibility_off : Icons.visibility),
-              onPressed: () => setState(() {
-                visible = !visible;
-              }),
-            )),
+          contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+          labelText: widget.labelText,
+          hintText:
+              widget.hintText ?? "Enter your ${widget.labelText.toLowerCase()}",
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: kPrimaryLightColor),
+              borderRadius: BorderRadius.circular(40)),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: kPrimaryColor),
+              borderRadius: BorderRadius.circular(40)),
+          focusColor: kPrimaryColor,
+          suffixIcon: IconButton(
+            icon: Icon(visible ? Icons.visibility_off : Icons.visibility),
+            onPressed: () => setState(() {
+              visible = !visible;
+            }),
+            color: kPrimaryLightColor,
+          ),
+          border: InputBorder.none,
+        ),
       ),
+    );
+  }
+}
+
+class AlreadyHaveAnAccountCheck extends StatelessWidget {
+  final bool login;
+  final Function onPress;
+  const AlreadyHaveAnAccountCheck({
+    Key key,
+    this.login = true,
+    this.onPress,
+  }) : super(key: key);
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          login ? "Don’t have an Account ? " : "Already have an Account ? ",
+          style: TextStyle(fontSize: 16),
+        ),
+        GestureDetector(
+          onTap: onPress,
+          child: Text(
+            login ? "Sign Up" : "Sign In",
+            style: TextStyle(fontSize: 16, color: kPrimaryColor),
+          ),
+        ),
+      ],
     );
   }
 }
