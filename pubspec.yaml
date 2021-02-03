@@ -24,9 +24,12 @@ dependencies:
   flutter:
     sdk: flutter
   auto_route: ^0.6.9
+  cloud_firestore: ^0.16.0
   connectivity: ^2.0.2
   cupertino_icons: ^1.0.0
   dio: ^3.0.10
+  firebase_auth: ^0.20.0+1
+  firebase_core: ^0.7.0
   flutter_launcher_icons: ^0.8.1
   fluttertoast: ^7.1.6
   get_it: ^5.0.6

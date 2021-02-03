@@ -47,7 +47,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 25),
                     RoundedButton(
-                        text: "SIGN IN", width: 0.9, onPress: model.onSubmit),
+                        text: "SIGN IN", width: 0.9, onPress:()=> model.onSubmit(context)),
                     SizedBox(height: size.height * 0.03),
                     GestureDetector(
                       onTap: model.forgotPassword,

@@ -4,10 +4,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:messenger/locator.dart';
 import 'package:messenger/router.gr.dart';
-
+import 'package:firebase_core/firebase_core.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
+  await Firebase.initializeApp();
   await Hive.initFlutter();
   runApp(MyApp());
 }
