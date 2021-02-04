@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:messenger/constants.dart';
 import 'package:messenger/locator.dart';
@@ -10,9 +11,9 @@ enum SnackbarType { greenAndRed, redAndWhite }
 @lazySingleton
 class UtilsService {
   final SnackbarService _snackBar = locator<SnackbarService>();
+  String _verificationId;
   UtilsService() {
     setupSnackbarUi();
-    print("helllo");
   }
   showErrorSnackBar({title, msg}) {
     _snackBar.showCustomSnackBar(
@@ -40,6 +41,43 @@ class UtilsService {
       onMainButtonTapped: () => {},
     );
   }
+
+  sendOTP(mobile,onSent) async {
+    final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verId) {
+      this._verificationId = verId;
+    };
+    final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResent]) {
+      this._verificationId = verId;
+      showSnackBar(msg: "Please enter the otp sent to your mobile", title: "An OTP has veen sent your mobile");
+    };
+
+    final PhoneVerificationCompleted verifiedSuccess = (AuthCredential auth) {};
+    final PhoneVerificationFailed verifyFailed = (FirebaseAuthException e) {
+      print('${e.message}');
+    };
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: "+91$mobile",
+      timeout: const Duration(seconds: 5),
+      verificationCompleted: verifiedSuccess,
+      verificationFailed: verifyFailed,
+      codeSent: smsCodeSent,
+      codeAutoRetrievalTimeout: autoRetrieve,
+    );
+  }
+  
+ verifyOTP(otp)async
+ {
+     final AuthCredential credential = PhoneAuthProvider.credential(
+      verificationId: _verificationId,
+      smsCode: otp,
+    );
+    await FirebaseAuth.instance.signInWithCredential(credential).then((user) {
+      print("logedin $user");
+
+    }).catchError((e) {
+      print(e);
+    });
+ }
 
   showToast({background = kErrorPrimaryColor, textColor = Colors.white, msg}) {
     return Fluttertoast.showToast(

@@ -8,13 +8,13 @@ import 'package:stacked_services/stacked_services.dart';
 
 class LoginViewModel extends BaseViewModel {
   NavigationService _nav = locator<NavigationService>();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   UtilsService _utils = locator<UtilsService>();
-  TextEditingController _codeController = new TextEditingController();
-  String mobile = "";
+    String mobile = "";
   String pass = "";
-  String _verifId;
-  String _code;
+
+
+  get verifiedSuccess => null;
   onMobile(val) {
     mobile = val;
   }
@@ -24,36 +24,11 @@ class LoginViewModel extends BaseViewModel {
   }
 
   forgotPassword() {}
-  onSubmit(context) async {
-    final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verId) {
-      _verifId = verId;
-    };
-    final PhoneCodeSent smsCodeSent = (String verID, [int forceCodeResend]) {
-      _verifId = verID;
-    };
-    final PhoneVerificationCompleted verifiedSuccess =
-        (PhoneAuthCredential user) {
-      print("verified $user");
-    };
-    if (mobile != "" && pass != "") {
-      try {
-        await _auth.verifyPhoneNumber(
-            phoneNumber: "+91$mobile",
-            timeout: Duration(seconds: 20),
-            verificationCompleted: verifiedSuccess,
-            codeSent: (String verificationId, [int forceResendingToken]) {
-              print(verificationId);
-            },
-            codeAutoRetrievalTimeout: autoRetrieve,
-            verificationFailed: (err) {
-              print(err.message);
-            });
-      } catch (e) {
-        print(e.toString());
-      }
-    } else {
-      _utils.showToast(msg: "Please fill all the details");
-    }
+
+  Future<void> onSubmit(context) async {
+    await _utils.sendOTP(mobile, () {
+      _nav.navigateTo(Routes.signUpScreen);
+    });
   }
 
   signup() {
