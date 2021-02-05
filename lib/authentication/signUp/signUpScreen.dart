@@ -37,7 +37,6 @@ class SignUpScreen extends StatelessWidget {
                     SizedBox(height: size.height * 0.05),
                     RoundedInputField(
                       labelText: "User Name",
-                      keyboardType: TextInputType.phone,
                       onChanged: (val) => model.onText(val, 'username'),
                     ),
                     SizedBox(height: 5),

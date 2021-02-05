@@ -1,3 +1,4 @@
+import 'package:messenger/_services/fcmService.dart';
 import 'package:messenger/locator.dart';
 import 'package:messenger/router.gr.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -11,6 +12,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   NavigationService _nav = locator<NavigationService>();
+  FcmService _fcm = locator<FcmService>();
   @override
   void initState() {
     super.initState();
@@ -21,6 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _fcm.initService(context);
     return Scaffold(
       body: Center(
         child: "This is splashScreen".text.make(),

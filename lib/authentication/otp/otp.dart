@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:pinput/pin_put/pin_put.dart';
 import 'package:messenger/_components/customButton.dart';
 import 'package:messenger/constants.dart';
 import 'package:stacked/stacked.dart';
 import 'otpViewModel.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'package:pin_input_text_field/pin_input_text_field.dart';
+
 class OTPScreen extends StatelessWidget {
-  Color get kPrimaryDarkColor => null;
+  BoxDecoration get pinPutDecoration {
+    return BoxDecoration(
+      border: Border.all(color: Colors.deepPurpleAccent),
+      borderRadius: BorderRadius.circular(15.0),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +22,7 @@ class OTPScreen extends StatelessWidget {
       builder: (context, model, _) {
         return Scaffold(
           body: Container(
-            padding: EdgeInsets.all(15),
+            padding: EdgeInsets.all(25),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -38,19 +44,32 @@ class OTPScreen extends StatelessWidget {
                   SizedBox(height: 25),
                   "Please enter the otp recieved".text.make(),
                   SizedBox(height: size.height * 0.08),
-                   PinInputTextField(
-                                enabled: model.enableOtp,
-                                onChanged: model.onEnter,
-                                autoFocus: true,
-                                cursor:
-                                    Cursor(color: kPrimaryColor, enabled: true),
-                                decoration: UnderlineDecoration(
-                                  colorBuilder: PinListenColorBuilder(
-                                      kPrimaryDarkColor, kPrimaryColor),
-                                ),
-                                pinLength: 5,
-                                keyboardType: TextInputType.number,
-                              ),
+                  Container(
+                    padding: const EdgeInsets.all(20.0),
+                    child: PinPut(
+                      fieldsCount: 6,
+                      onSubmit: model.onEnter,
+                      focusNode: model.pinPutFocusNode,
+                      controller: model.otpController,
+                      submittedFieldDecoration: pinPutDecoration.copyWith(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      selectedFieldDecoration: pinPutDecoration,
+                      followingFieldDecoration: pinPutDecoration.copyWith(
+                        borderRadius: BorderRadius.circular(5.0),
+                        border: Border.all(
+                          color: Colors.deepPurpleAccent.withOpacity(.5),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: FlatButton(
+                      child: "resend otp".text.color(kPrimaryColor).make(),
+                      onPressed: model.resend,
+                    ),
+                  ),
                   SizedBox(height: 25),
                   RoundedButton(
                       text: "Submit", width: 0.9, onPress: model.onSubmit),

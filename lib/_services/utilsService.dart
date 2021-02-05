@@ -42,13 +42,13 @@ class UtilsService {
     );
   }
 
-  sendOTP(mobile,onSent) async {
+  sendOTP(mobile) async {
     final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verId) {
       this._verificationId = verId;
     };
     final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResent]) {
       this._verificationId = verId;
-      showSnackBar(msg: "Please enter the otp sent to your mobile", title: "An OTP has veen sent your mobile");
+      showToast(msg: "An OTP has been sent", background: kPrimaryColor);
     };
 
     final PhoneVerificationCompleted verifiedSuccess = (AuthCredential auth) {};
@@ -64,20 +64,26 @@ class UtilsService {
       codeAutoRetrievalTimeout: autoRetrieve,
     );
   }
-  
- verifyOTP(otp)async
- {
-     final AuthCredential credential = PhoneAuthProvider.credential(
-      verificationId: _verificationId,
-      smsCode: otp,
-    );
-    await FirebaseAuth.instance.signInWithCredential(credential).then((user) {
-      print("logedin $user");
 
-    }).catchError((e) {
-      print(e);
-    });
- }
+  verifyOTP(otp) async {
+    try {
+      final AuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: _verificationId,
+        smsCode: otp,
+      );
+      await FirebaseAuth.instance.signInWithCredential(credential).then((user) {
+        print("logedin $user");
+        showToast(background: kPrimaryColor, msg: "Otp verified successfully");
+        return true;
+      }).catchError((e) {
+        showToast(msg: e.message);
+        return false;
+      });
+    } catch (e) {
+      showToast(msg: e.message);
+      return false;
+    }
+  }
 
   showToast({background = kErrorPrimaryColor, textColor = Colors.white, msg}) {
     return Fluttertoast.showToast(
