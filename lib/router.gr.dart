@@ -13,8 +13,10 @@ import 'authentication/login/loginScreen.dart';
 import 'authentication/otp/otp.dart';
 import 'authentication/signUp/signUpScreen.dart';
 import 'home/home.dart';
+import 'newMessage/newMessage.dart';
 import 'profile/profileScreen.dart';
 import 'splashScreen/splashScreen.dart';
+import 'viewMessage/viewMessage.dart';
 
 class Routes {
   static const String splashScreen = '/';
@@ -22,6 +24,8 @@ class Routes {
   static const String signUpScreen = '/sign-up-screen';
   static const String oTPScreen = '/o-tp-screen';
   static const String homeScreen = '/home-screen';
+  static const String newMessageScreen = '/new-message-screen';
+  static const String viewMessageScreen = '/view-message-screen';
   static const String profileScreen = '/profile-screen';
   static const all = <String>{
     splashScreen,
@@ -29,6 +33,8 @@ class Routes {
     signUpScreen,
     oTPScreen,
     homeScreen,
+    newMessageScreen,
+    viewMessageScreen,
     profileScreen,
   };
 }
@@ -42,6 +48,8 @@ class Router extends RouterBase {
     RouteDef(Routes.signUpScreen, page: SignUpScreen),
     RouteDef(Routes.oTPScreen, page: OTPScreen),
     RouteDef(Routes.homeScreen, page: HomeScreen),
+    RouteDef(Routes.newMessageScreen, page: NewMessageScreen),
+    RouteDef(Routes.viewMessageScreen, page: ViewMessageScreen),
     RouteDef(Routes.profileScreen, page: ProfileScreen),
   ];
   @override
@@ -74,6 +82,18 @@ class Router extends RouterBase {
     HomeScreen: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => HomeScreen(),
+        settings: data,
+      );
+    },
+    NewMessageScreen: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => NewMessageScreen(),
+        settings: data,
+      );
+    },
+    ViewMessageScreen: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ViewMessageScreen(),
         settings: data,
       );
     },

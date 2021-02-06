@@ -32,6 +32,7 @@ class LoginViewModel extends BaseViewModel {
         if (resp['data']['verified']) {
           _user.loggedUser = UserModel.fromJson(resp['data']);
           _user.setUserToken(resp['token']);
+          _nav.clearStackAndShow(Routes.homeScreen);
         } else {
           _utils.sendOTP(mobile);
           _user.mobile = mobile;

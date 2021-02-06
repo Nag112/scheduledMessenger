@@ -1,11 +1,12 @@
 import 'package:auto_route/auto_route_annotations.dart';
-import 'package:messenger/authentication/login/loginScreen.dart';
-import 'package:messenger/authentication/signUp/signUpScreen.dart';
-import 'package:messenger/profile/profileScreen.dart';
-import 'package:messenger/splashScreen/splashScreen.dart';
-
+import 'authentication/login/loginScreen.dart';
+import 'authentication/signUp/signUpScreen.dart';
+import 'profile/profileScreen.dart';
+import 'splashScreen/splashScreen.dart';
 import 'authentication/otp/otp.dart';
 import 'home/home.dart';
+import 'newMessage/newMessage.dart';
+import 'viewMessage/viewMessage.dart';
 
 @MaterialAutoRouter(routes: <AutoRoute>[
   MaterialRoute(page: SplashScreen, initial: true),
@@ -13,6 +14,8 @@ import 'home/home.dart';
   MaterialRoute(page: SignUpScreen),
   MaterialRoute(page: OTPScreen),
   MaterialRoute(page: HomeScreen),
+  MaterialRoute(page: NewMessageScreen),
+  MaterialRoute(page: ViewMessageScreen),
   MaterialRoute(page: ProfileScreen)
 ])
 class $Router {}

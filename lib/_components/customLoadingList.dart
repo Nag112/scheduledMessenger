@@ -14,7 +14,7 @@ class CustomLoadingList extends StatelessWidget {
           ),
         ),
       ),
-      itemCount: 6,
+      itemCount: 7,
     );
   }
 }
