@@ -16,25 +16,22 @@ class OTPViewModel extends BaseViewModel {
   final FocusNode pinPutFocusNode = FocusNode();
   bool enableOtp = true;
   String otp;
+
   onSubmit() async {
     if (otp != null && otp.length > 4) {
       bool resp = await _utils.verifyOTP(otp);
-      print(resp);
       if (resp) {
-        var data = {..._user.signupData, "deviceToken": _user.deviceToken};
-        _api.signUp(data).then((resp) {
-          if (resp != null) {
-            _nav.navigateTo(Routes.loginScreen);
-          } else {
-            _nav.back();
-          }
-        });
+        var result =
+            await _api.updateVerify({"mobile": _user.mobile});
+        if (result != null) {
+          _nav.navigateTo(Routes.loginScreen);
+        }
       }
     }
   }
 
   resend() {
-    _utils.sendOTP(_user.signupData['mobile']);
+    _utils.sendOTP(_user.mobile);
   }
 
   onEnter(val) {

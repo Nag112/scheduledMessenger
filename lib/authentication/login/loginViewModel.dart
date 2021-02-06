@@ -24,16 +24,22 @@ class LoginViewModel extends BaseViewModel {
     pass = val;
   }
 
-  forgotPassword() {
-    
-  }
+  forgotPassword() {}
 
   Future<void> onSubmit() async {
     if (mobile != "" && pass != "") {
       _api.login({"mobile": mobile, "password": pass}).then((resp) {
-        _user.loggedUser = UserModel.fromJson(resp['data']);
-        _user.setUserToken(resp['token']);
-      }).catchError((e) {});
+        if (resp['data']['verified']) {
+          _user.loggedUser = UserModel.fromJson(resp['data']);
+          _user.setUserToken(resp['token']);
+        } else {
+          _utils.sendOTP(mobile);
+          _user.mobile = mobile;
+          _nav.navigateTo(Routes.oTPScreen);
+        }
+      }).catchError((e) {
+        print(e);
+      });
     } else {
       _utils.showToast(msg: "Please fill all the details");
     }

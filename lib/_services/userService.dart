@@ -10,7 +10,7 @@ class UserService {
       _userToken = box.get("token");
     });
   }
-  Map signupData = {};
+  String mobile;
   String deviceToken;
   String _userToken;
   String get userToken => _userToken;

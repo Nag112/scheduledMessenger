@@ -8,12 +8,14 @@ import 'package:messenger/locator.dart';
 class ApiService {
   UtilsService _utils = locator<UtilsService>();
   static BaseOptions _options = new BaseOptions(
-    baseUrl: "http://10.0.2.2:5001",
+    baseUrl: "http://192.168.1.103:5001",
     responseType: ResponseType.json,
     connectTimeout: 6000,
+    headers: {'x-key':"cfd95e5924e46c0015032a3434cd4266876d60d0"},
     receiveTimeout: 8000,
   );
   Dio dio = new Dio(_options);
+
   Future signUp(data) async {
     Response result;
     try {
@@ -22,7 +24,7 @@ class ApiService {
       _showError(e);
       return null;
     }
-    if (result.statusCode == 200 && result.data['status']) {
+    if (result.statusCode == 200) {
       _utils.showToast(
           msg: result.data["message"].toString(), background: kPrimaryColor);
       return Map.from(result.data);
@@ -40,7 +42,7 @@ class ApiService {
       _showError(e);
       return null;
     }
-    if (result.statusCode == 200 && result.data['status']) {
+    if (result.statusCode == 200) {
       _utils.showToast(
           msg: result.data["message"].toString(), background: kPrimaryColor);
       return Map.from(result.data);
@@ -49,8 +51,24 @@ class ApiService {
     }
     return null;
   }
-
-  _showError(dynamic e) {
+  Future updateVerify(data) async {
+    Response result;
+    try {
+      result = await dio.post("/user/verify", data: data);
+    } catch (e) {
+      _showError(e);
+      return null;
+    }
+    if (result.statusCode == 200) {
+      _utils.showToast(
+          msg: result.data["message"].toString(), background: kPrimaryColor);
+      return Map.from(result.data);
+    } else {
+      _utils.showToast(msg: result.data["message"].toString());
+    }
+    return null;
+  }
+  _showError(DioError e) {
     if (e.type == DioErrorType.DEFAULT &&
         e.message.contains('SocketException') &&
         e.message.contains('Network is unreachable')) {
@@ -65,9 +83,8 @@ class ApiService {
           msg: "Please connect to Internet for better experience");
       return;
     }
-
     _utils.showErrorSnackBar(
         title: "Server error",
-        msg: "Something went wrong. Please try again later");
+        msg: e.response.data['message']);
   }
 }

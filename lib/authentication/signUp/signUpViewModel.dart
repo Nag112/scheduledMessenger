@@ -1,3 +1,4 @@
+import 'package:messenger/_services/apiService.dart';
 import 'package:messenger/_services/userService.dart';
 import 'package:messenger/_services/utilsService.dart';
 import 'package:messenger/locator.dart';
@@ -8,6 +9,7 @@ import 'package:stacked_services/stacked_services.dart';
 class SignUpViewModel extends BaseViewModel {
   NavigationService _nav = locator<NavigationService>();
   UtilsService _utils = locator<UtilsService>();
+  ApiService _api = locator<ApiService>();
   UserService _userService = locator<UserService>();
   Map _user = {
     "mobile": "",
@@ -50,9 +52,15 @@ class SignUpViewModel extends BaseViewModel {
       if (cpass != _user['password']) {
         _utils.showToast(msg: "Passwords doesn't match");
       } else {
-        _userService.signupData = _user;
-        _utils.sendOTP(_user["mobile"]);
-        _nav.navigateTo(Routes.oTPScreen);
+        _api.signUp(_user).then((resp) {
+          if (resp != null) {
+            _userService.mobile = _user["mobile"];
+            _utils.sendOTP(_user["mobile"]);
+            _nav.navigateTo(Routes.oTPScreen);
+          } else {
+            _nav.back();
+          }
+        });
       }
     } else {
       _utils.showToast(msg: "Please fill all the details");
