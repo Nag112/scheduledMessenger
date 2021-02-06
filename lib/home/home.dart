@@ -8,6 +8,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
+      onModelReady: (model) => model.onReady,
       viewModelBuilder: () => HomeViewModel(),
       builder: (context, model, _) {
         return Scaffold(
@@ -17,16 +18,16 @@ class HomeScreen extends StatelessWidget {
             actions: [
               IconButton(
                 icon: Icon(Icons.settings),
-                onPressed: () {},
+                onPressed: model.profilePage,
               )
             ],
           ),
           body: Container(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-              child: CustomLoadingList()),
+              child: model.isBusy ? CustomLoadingList() : Container()),
           floatingActionButton: !model.isAdmin
               ? FloatingActionButton(
-                  onPressed: () {},
+                  onPressed: model.addMessage,
                   child: Icon(
                     Icons.add,
                     size: 32,

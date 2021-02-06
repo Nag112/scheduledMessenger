@@ -8,7 +8,18 @@ class ProfileScreen extends StatelessWidget {
     return ViewModelBuilder<ProfileViewModel>.reactive(
       viewModelBuilder: () => ProfileViewModel(),
       builder: (context, model, _) {
-        return Scaffold();
+        return Scaffold(
+          appBar: AppBar(
+            title: Text("Profile"),
+            centerTitle: true,
+          ),
+          body: Center(
+            child: RaisedButton(
+              child: Text("Logout"),
+              onPressed: model.logout,
+            ),
+          ),
+        );
       },
     );
   }

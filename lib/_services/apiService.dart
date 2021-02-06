@@ -8,7 +8,7 @@ import 'package:messenger/locator.dart';
 class ApiService {
   UtilsService _utils = locator<UtilsService>();
   static BaseOptions _options = new BaseOptions(
-    baseUrl: "http://192.168.1.103:5001",
+    baseUrl: "http://192.168.1.101:5001",
     responseType: ResponseType.json,
     connectTimeout: 6000,
     headers: {'x-key': "cfd95e5924e46c0015032a3434cd4266876d60d0"},
@@ -20,6 +20,42 @@ class ApiService {
     Response result;
     try {
       result = await dio.post("/user/register", data: data);
+    } catch (e) {
+      _showError(e);
+      return null;
+    }
+    if (result.statusCode == 200) {
+      _utils.showToast(
+          msg: result.data["message"].toString(), background: kPrimaryColor);
+      return Map.from(result.data);
+    } else {
+      _utils.showToast(msg: result.data["message"].toString());
+    }
+    return null;
+  }
+
+  Future getMessages() async {
+    Response result;
+    try {
+      result = await dio.get("/messages");
+    } catch (e) {
+      _showError(e);
+      return null;
+    }
+    if (result.statusCode == 200) {
+      _utils.showToast(
+          msg: result.data["message"].toString(), background: kPrimaryColor);
+      return Map.from(result.data);
+    } else {
+      _utils.showToast(msg: result.data["message"].toString());
+    }
+    return null;
+  }
+
+  Future newMessage(data) async {
+    Response result;
+    try {
+      result = await dio.post("/messages", data: data);
     } catch (e) {
       _showError(e);
       return null;
@@ -90,7 +126,7 @@ class ApiService {
           title: "Server error", msg: e.response.data['message']);
     } catch (err) {
       _utils.showErrorSnackBar(
-          title: "Server error", msg: "Something is wrong");
+          title: "Server error", msg: e.message);
     }
   }
 }
