@@ -55,10 +55,9 @@ class SignUpViewModel extends BaseViewModel {
         _api.signUp(_user).then((resp) {
           if (resp != null) {
             _userService.mobile = _user["mobile"];
+            print(_userService.mobile);
             _utils.sendOTP(_user["mobile"]);
             _nav.navigateTo(Routes.oTPScreen);
-          } else {
-            _nav.back();
           }
         });
       }

@@ -21,8 +21,7 @@ class OTPViewModel extends BaseViewModel {
     if (otp != null && otp.length > 4) {
       bool resp = await _utils.verifyOTP(otp);
       if (resp) {
-        var result =
-            await _api.updateVerify({"mobile": _user.mobile});
+        var result = await _api.updateVerify({"mobile": _user.mobile});
         if (result != null) {
           _nav.navigateTo(Routes.loginScreen);
         }
@@ -31,6 +30,7 @@ class OTPViewModel extends BaseViewModel {
   }
 
   resend() {
+    print(_user.mobile);
     _utils.sendOTP(_user.mobile);
   }
 

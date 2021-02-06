@@ -11,7 +11,7 @@ class ApiService {
     baseUrl: "http://192.168.1.103:5001",
     responseType: ResponseType.json,
     connectTimeout: 6000,
-    headers: {'x-key':"cfd95e5924e46c0015032a3434cd4266876d60d0"},
+    headers: {'x-key': "cfd95e5924e46c0015032a3434cd4266876d60d0"},
     receiveTimeout: 8000,
   );
   Dio dio = new Dio(_options);
@@ -51,6 +51,7 @@ class ApiService {
     }
     return null;
   }
+
   Future updateVerify(data) async {
     Response result;
     try {
@@ -68,6 +69,7 @@ class ApiService {
     }
     return null;
   }
+
   _showError(DioError e) {
     if (e.type == DioErrorType.DEFAULT &&
         e.message.contains('SocketException') &&
@@ -83,8 +85,12 @@ class ApiService {
           msg: "Please connect to Internet for better experience");
       return;
     }
-    _utils.showErrorSnackBar(
-        title: "Server error",
-        msg: e.response.data['message']);
+    try {
+      _utils.showErrorSnackBar(
+          title: "Server error", msg: e.response.data['message']);
+    } catch (err) {
+      _utils.showErrorSnackBar(
+          title: "Server error", msg: "Something is wrong");
+    }
   }
 }

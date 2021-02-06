@@ -73,8 +73,6 @@ class UtilsService {
       );
       UserCredential user =
           await FirebaseAuth.instance.signInWithCredential(credential);
-      print(user.toString());
-      showToast(background: kPrimaryColor, msg: "Otp verified successfully");
       return true;
     } catch (e) {
       showToast(msg: e.message);
