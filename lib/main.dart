@@ -5,11 +5,15 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:messenger/locator.dart';
 import 'package:messenger/router.gr.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+import '_models/userHive.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
   await Firebase.initializeApp();
-  await Hive.initFlutter();
+  Hive
+  ..initFlutter()
+  ..registerAdapter(UserHiveAdapter());
   runApp(MyApp());
 }
 

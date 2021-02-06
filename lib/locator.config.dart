@@ -11,6 +11,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '_services/apiService.dart';
 import '_services/connectivityService.dart';
 import '_services/coreServices.dart';
+import '_services/fcmService.dart';
 import '_services/userService.dart';
 import '_services/utilsService.dart';
 
@@ -27,6 +28,7 @@ GetIt $initGetIt(
   gh.lazySingleton<ApiService>(() => ApiService());
   gh.lazySingleton<ConnectivityService>(() => ConnectivityService());
   gh.lazySingleton<DialogService>(() => coreServices.dialogService);
+  gh.lazySingleton<FcmService>(() => FcmService());
   gh.lazySingleton<NavigationService>(() => coreServices.navigationService);
   gh.lazySingleton<SnackbarService>(() => coreServices.snackBarService);
   gh.lazySingleton<UserService>(() => UserService());

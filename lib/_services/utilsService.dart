@@ -65,20 +65,17 @@ class UtilsService {
     );
   }
 
-  verifyOTP(otp) async {
+  Future verifyOTP(otp) async {
     try {
       final AuthCredential credential = PhoneAuthProvider.credential(
         verificationId: _verificationId,
         smsCode: otp,
       );
-      await FirebaseAuth.instance.signInWithCredential(credential).then((user) {
-        print("logedin $user");
-        showToast(background: kPrimaryColor, msg: "Otp verified successfully");
-        return true;
-      }).catchError((e) {
-        showToast(msg: e.message);
-        return false;
-      });
+      UserCredential user =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      print(user.toString());
+      showToast(background: kPrimaryColor, msg: "Otp verified successfully");
+      return true;
     } catch (e) {
       showToast(msg: e.message);
       return false;

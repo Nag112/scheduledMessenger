@@ -11,6 +11,7 @@ class SignUpViewModel extends BaseViewModel {
   UserService _userService = locator<UserService>();
   Map _user = {
     "mobile": "",
+    "deviceToken": "",
     "username": "",
     "password": "",
   };
@@ -39,6 +40,7 @@ class SignUpViewModel extends BaseViewModel {
 
   onSubmit() {
     bool _error = false;
+    _user['deviceToken'] = _userService.deviceToken;
     _user.forEach((key, val) {
       if (val == "") {
         _error = true;

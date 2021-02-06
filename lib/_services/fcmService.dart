@@ -64,5 +64,6 @@ class PushNotificationService {
     FirebaseMessaging.onMessage.listen((message) {
       print(message);
     });
+    // FirebaseMessaging.onBackgroundMessage((message))
   }
 }
