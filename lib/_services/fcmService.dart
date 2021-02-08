@@ -32,7 +32,6 @@ class PushNotificationService {
         'channel_ID', 'channel name', 'channel description',
         importance: Importance.max,
         playSound: true,
-        // sound: 'sound',
         showProgress: true,
         priority: Priority.high,
         ticker: 'test ticker');

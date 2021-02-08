@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(Duration(seconds: 2), () {
       UserService _user = locator<UserService>();
       if (_user.userToken != null && _user.userToken != "") {
-        _nav.navigateTo(Routes.homeScreen);
+        _nav.replaceWith(Routes.homeScreen);
       } else {
         _nav.replaceWith(Routes.loginScreen);
       }
