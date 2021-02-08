@@ -14,7 +14,7 @@ class SignUpViewModel extends BaseViewModel {
   Map _user = {
     "mobile": "",
     "deviceToken": "",
-    "username": "",
+    "name": "",
     "password": "",
   };
   String cpass = "";
@@ -30,7 +30,7 @@ class SignUpViewModel extends BaseViewModel {
         _user['password'] = val;
         break;
       case 'username':
-        _user['username'] = val;
+        _user['name'] = val;
         break;
       default:
     }

@@ -54,7 +54,9 @@ class ApiService {
   Future newMessage(data) async {
     Response result;
     try {
-      result = await dio.post("/messages", data: data);
+      result = await dio.post("/messages",
+          data: data,
+          options: Options(headers: {"authtoken": _user.userToken}));
     } catch (e) {
       _showError(e);
       return null;
@@ -75,6 +77,22 @@ class ApiService {
       if (result.statusCode == 200) {
         _utils.showToast(
             msg: result.data["message"].toString(), background: kPrimaryColor);
+        return Map.from(result.data);
+      } else {
+        _utils.showToast(msg: result.data["message"].toString());
+      }
+      return null;
+    } catch (e) {
+      _showError(e);
+      return null;
+    }
+  }
+
+  Future getAllUsers() async {
+    try {
+      Response result = await dio.get("/user",
+          options: Options(headers: {"authtoken": _user.userToken}));
+      if (result.statusCode == 200) {
         return Map.from(result.data);
       } else {
         _utils.showToast(msg: result.data["message"].toString());

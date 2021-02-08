@@ -19,7 +19,12 @@ class HomeViewModel extends ReactiveViewModel {
   RefreshController refreshController =
       RefreshController(initialRefresh: false);
   List<ReactiveServiceMixin> get reactiveServices => [_messagesService];
-  List<Message> get messages => List<Message>.from(_messagesService.messages.reversed);
+  List<Message> get messages =>
+      List<Message>.from(_messagesService.messages.reversed);
+
+  fetchMessages() {
+    _messagesService.fetchMessages();
+  }
 
   onRefresh() {
     _messagesService.fetchMessages();

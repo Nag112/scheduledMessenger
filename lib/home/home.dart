@@ -10,6 +10,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
+      onModelReady: (model)=>model.fetchMessages(),
       builder: (context, model, _) {
         return Scaffold(
           appBar: AppBar(
@@ -118,7 +119,7 @@ class Sent extends StatelessWidget {
       child: Center(
         child: Text(
           "Sent",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.white),
         ),
       ),
     );

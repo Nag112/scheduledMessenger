@@ -27,12 +27,14 @@ class MessagesService with ReactiveServiceMixin {
               return Message(
                   createdAt: ele.createdAt,
                   updatedAt: ele.updatedAt,
+                  time: ele.time,
                   users: ele.users,
                   message: ele.message,
                   sId: ele.sId);
             })
             .toList()
             .cast<Message>();
+             notifyListeners();
       } else {
         print("No messages");
       }
