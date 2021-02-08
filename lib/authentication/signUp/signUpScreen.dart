@@ -4,7 +4,6 @@ import 'package:messenger/constants.dart';
 import 'signUpViewModel.dart';
 import 'package:messenger/_components/customInputFields.dart';
 import 'package:stacked/stacked.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class SignUpScreen extends StatelessWidget {
   @override

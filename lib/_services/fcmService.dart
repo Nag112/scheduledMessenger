@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:messenger/_services/messagesService.dart';
 import 'package:messenger/_services/userService.dart';
 import 'package:messenger/locator.dart';
 
@@ -14,6 +15,7 @@ class FcmService {
 }
 
 class PushNotificationService {
+  MessagesService _messagesService = locator<MessagesService>();
   final FirebaseMessaging _fcm;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       new FlutterLocalNotificationsPlugin();
@@ -61,8 +63,7 @@ class PushNotificationService {
     UserService _user = locator<UserService>();
     _user.deviceToken = token;
     FirebaseMessaging.onMessage.listen((message) {
-      print(message);
+      _messagesService.fetchMessages();
     });
-    // FirebaseMessaging.onBackgroundMessage((message))
   }
 }

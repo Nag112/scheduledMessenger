@@ -1,5 +1,4 @@
 import 'package:messenger/_models/message.dart';
-import 'package:messenger/_services/apiService.dart';
 import 'package:messenger/_services/messagesService.dart';
 import 'package:messenger/_services/userService.dart';
 import 'package:messenger/locator.dart';
@@ -11,7 +10,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class HomeViewModel extends ReactiveViewModel {
   bool _isBusy = false;
   bool get isBusy => _isBusy;
-  ApiService _api = locator<ApiService>();
+
   NavigationService _nav = locator<NavigationService>();
   UserService _user = locator<UserService>();
   MessagesService _messagesService = locator<MessagesService>();

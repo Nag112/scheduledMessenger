@@ -56,7 +56,9 @@ class ApiService {
     try {
       result = await dio.post("/messages",
           data: data,
-          options: Options(headers: {"authtoken": _user.userToken}));
+          options: Options(headers: {
+            "authtoken": _user.userToken
+          })); //usertoken is called in each api because to get the updated token from the user service instead of null, if called only once before login
     } catch (e) {
       _showError(e);
       return null;

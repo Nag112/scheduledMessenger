@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:messenger/_services/apiService.dart';
 import 'package:messenger/_services/messagesService.dart';
 import 'package:messenger/_services/utilsService.dart';
-import 'package:messenger/constants.dart';
 import 'package:messenger/locator.dart';
 import 'package:messenger/router.gr.dart';
 import 'package:stacked/stacked.dart';
@@ -59,7 +58,6 @@ class NewMessageViewModel extends BaseViewModel {
             if (resp['success']) {
               _messagesService.fetchMessages();
             }
-            _utils.showToast(msg: resp['message'], background: kPrimaryColor);
           });
         }
       } else {

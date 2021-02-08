@@ -71,8 +71,7 @@ class UtilsService {
         verificationId: _verificationId,
         smsCode: otp,
       );
-      UserCredential user =
-          await FirebaseAuth.instance.signInWithCredential(credential);
+       await FirebaseAuth.instance.signInWithCredential(credential);
       return true;
     } catch (e) {
       showToast(msg: e.message);

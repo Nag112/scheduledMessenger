@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
       viewModelBuilder: () => HomeViewModel(),
-      onModelReady: (model)=>model.fetchMessages(),
+      onModelReady: (model) => model.fetchMessages(),
       builder: (context, model, _) {
         return Scaffold(
           appBar: AppBar(
@@ -100,7 +100,7 @@ class UpComing extends StatelessWidget {
       width: 60,
       height: 60,
       child: Text(
-        "Up coming",
+        "Up Coming",
         textAlign: TextAlign.center,
         style: TextStyle(color: Colors.white),
       ),
@@ -112,10 +112,10 @@ class Sent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 60,
-      height: 60,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(60), color: Colors.blueGrey),
+      width: 60,
+      height: 60,
       child: Center(
         child: Text(
           "Sent",

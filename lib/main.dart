@@ -10,12 +10,13 @@ import '_models/userHive.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  setupLocator();
-  await Firebase.initializeApp();
   Hive
     ..initFlutter()
     ..registerAdapter(UserHiveAdapter())
-  ..registerAdapter(MessageHiveAdapter());
+    ..registerAdapter(
+        MessageHiveAdapter()); //hive must be intitalised before locator as message server uses hive in constructor and message servicve is called in fcm service
+  setupLocator();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
