@@ -28,8 +28,10 @@ class HomeScreen extends StatelessWidget {
             controller: model.refreshController,
             header: ClassicHeader(),
             onRefresh: model.onRefresh,
-            child: model.isBusy
-                ? CustomLoadingList()
+            child: model.messages.length == 0
+                ? Center(
+                    child: Image.asset('assets/images/nodata.gif'),
+                  )
                 : ListView.builder(
                     itemCount: model.messages.length,
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
@@ -63,13 +65,9 @@ class HomeScreen extends StatelessWidget {
                             model.messages[index].message,
                             // textAlign: TextAlign.justify,
                           ),
-                          trailing: model.isAdmin
-                              ? MoreMenu(
+                          trailing:  MoreMenu(
                                   onSelect: (val) =>
                                       model.onMessageOption(val, index),
-                                )
-                              : SizedBox(
-                                  width: 1,
                                 ),
                           subtitle: Column(
                             mainAxisAlignment: MainAxisAlignment.start,

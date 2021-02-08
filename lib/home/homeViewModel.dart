@@ -42,6 +42,7 @@ class HomeViewModel extends ReactiveViewModel {
             arguments: {'msg': messages[ind]});
       } else if (val == 1) {
         _api.deleteMessage(messages[ind].sId).then((resp) {
+          print(resp);
           _messagesService.fetchMessages();
         }).catchError((err) {});
       }
