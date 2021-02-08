@@ -20,8 +20,9 @@ class NewMessageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Map args = ModalRoute.of(context).settings.arguments;
     return ViewModelBuilder<NewMessageViewModel>.reactive(
-      onModelReady: (model) => model.onStart(),
+      onModelReady: (model) => model.onStart(args),
       viewModelBuilder: () => NewMessageViewModel(),
       builder: (context, model, _) {
         return Scaffold(
@@ -45,6 +46,7 @@ class NewMessageScreen extends StatelessWidget {
                             color: Colors.black,
                           )),
                       child: TextFormField(
+                        initialValue: model.message,
                         onChanged: model.onMessage,
                         cursorColor: Colors.black,
                         maxLength: 250,

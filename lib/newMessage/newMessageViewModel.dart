@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:messenger/_models/message.dart';
 import 'package:messenger/_services/apiService.dart';
 import 'package:messenger/_services/messagesService.dart';
 import 'package:messenger/_services/utilsService.dart';
@@ -31,8 +32,13 @@ class NewMessageViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  onStart() async {
-    print("called ready");
+  onStart(args) async {
+    if (args != null) {
+      Message msg = args['msg'];
+      selectedUsers = msg.users.cast<String>();
+      dateTime = msg.time;
+      message = msg.message;
+    }
     var resp = await _api.getAllUsers();
     print(resp);
     users = List<Map>.from(resp['data']);

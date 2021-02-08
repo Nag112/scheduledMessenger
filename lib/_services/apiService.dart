@@ -106,6 +106,24 @@ class ApiService {
     }
   }
 
+  Future deleteMessage(id) async {
+    try {
+      Response result = await dio.post("/messages/delete/$id",
+          options: Options(headers: {"authtoken": _user.userToken}));
+      if (result.statusCode == 200) {
+        _utils.showToast(
+            msg: result.data["message"].toString(), background: kPrimaryColor);
+        return Map.from(result.data);
+      } else {
+        _utils.showToast(msg: result.data["message"].toString());
+      }
+      return null;
+    } catch (e) {
+      _showError(e);
+      return null;
+    }
+  }
+
   Future updateVerify(data) async {
     Response result;
     try {

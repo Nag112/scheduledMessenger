@@ -40,10 +40,10 @@ class HomeScreen extends StatelessWidget {
                         nn,
                         '',
                         am,
-                        ' ',
+                        '  ',
                         dd,
-                        '/',
-                        mm
+                        '-',
+                        M
                       ];
                       DateTime time = DateTime.fromMillisecondsSinceEpoch(
                           model.messages[index].time);
@@ -55,20 +55,29 @@ class HomeScreen extends StatelessWidget {
                                 bottom: BorderSide(
                                     color: Colors.black, width: 0.5))),
                         child: ListTile(
+                          contentPadding: EdgeInsets.zero,
                           leading: DateTime.now().isBefore(time)
                               ? UpComing()
                               : Sent(),
                           title: Text(
                             model.messages[index].message,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+                            // textAlign: TextAlign.justify,
                           ),
-                          subtitle: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          trailing: model.isAdmin
+                              ? MoreMenu(
+                                  onSelect: (val) =>
+                                      model.onMessageOption(val, index),
+                                )
+                              : SizedBox(
+                                  width: 1,
+                                ),
+                          subtitle: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(formatDate(time, format)),
                               Text(
-                                  "No. of Users: ${model.messages[index].users.length}")
+                                  "Sent to ${model.messages[index].users.length} users")
                             ],
                           ),
                         ),
@@ -123,5 +132,40 @@ class Sent extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class MoreMenu extends StatelessWidget {
+  final Function onSelect;
+  MoreMenu({this.onSelect});
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton(
+        padding: EdgeInsets.zero,
+        onSelected: onSelect,
+        itemBuilder: (context) => [
+              PopupMenuItem(
+                  value: 0,
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
+                        child: Icon(Icons.edit),
+                      ),
+                      Text('Edit')
+                    ],
+                  )),
+              PopupMenuItem(
+                  value: 1,
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
+                        child: Icon(Icons.delete),
+                      ),
+                      Text('Delete')
+                    ],
+                  )),
+            ]);
   }
 }
